@@ -103,9 +103,9 @@ public class OrderController implements CrudController<Order> {
 
 	public void addItem(Order order) {
 		List<Item> items = itemDAO.readAll();
-		LOGGER.info("Please enter an item to add. Enter 'Done' when you're finished");
+		LOGGER.info("Please enter an item to add. Enter 'Complete' when you're finished");
 		String newItem = utils.getString();
-		if (newItem.equalsIgnoreCase("DONE")) {
+		if (newItem.equalsIgnoreCase("COMPLETE")) {
 			return;
 		} else {
 			Long itemId = (long) -1;
@@ -160,17 +160,17 @@ public class OrderController implements CrudController<Order> {
 
 				if (orderItemId != -1) {
 					int deletedItem = orderItemDAO.delete(orderItemId);
-					LOGGER.info("Item removed from order");
+					LOGGER.info("Item removed from your order");
 					removeItem(order);
 					return;
 				} else {
-					LOGGER.info("Item not in order, please try again");
+					LOGGER.info("Item not in your order, please try again");
 					removeItem(order);
 					return;
 				}
 
 			} else {
-				LOGGER.info("No such item, please try again");
+				LOGGER.info("No item of that name, please try again");
 				removeItem(order);
 				return;
 			}

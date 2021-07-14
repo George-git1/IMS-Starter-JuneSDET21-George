@@ -1,5 +1,6 @@
 package com.qa.ims.persistence.domain;
 
+
 import java.util.Objects;
 
 public class OrderItem {
