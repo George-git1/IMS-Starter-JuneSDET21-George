@@ -35,7 +35,7 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 	}
 
-	// Currently just returns the order table. TODO: return contents of each order
+	
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
@@ -54,7 +54,7 @@ public class OrderController implements CrudController<Order> {
 		List<Customer> customers = customerDAO.readAll();
 		Long id = (long) -1;
 		for (Customer customer : customers) {
-			// this part isn't working, not matching the names up
+			
 			if (customer.getFirstName().equalsIgnoreCase(firstName)
 					&& customer.getSurname().equalsIgnoreCase(surname)) {
 				id = customer.getId();
@@ -62,7 +62,7 @@ public class OrderController implements CrudController<Order> {
 		}
 		if (id != -1) {
 			Order order = orderDAO.create(new Order(id, (double) 0));
-			// start adding items to order
+		
 			LOGGER.info("Order started");
 			addItem(order);
 			return order;
@@ -78,7 +78,7 @@ public class OrderController implements CrudController<Order> {
 	public Order update() {
 		LOGGER.info("Please enter the id of the order");
 		Long orderId = utils.getLong();
-	
+		
 		Order order = orderDAO.read(orderId);
 		LOGGER.info(
 				"First you will add any new items, then delete any old items. You do not have to both add and remove if you choose not to");
@@ -95,7 +95,7 @@ public class OrderController implements CrudController<Order> {
 		List<OrderItem> orderItems = orderItemDAO.readAll();
 		for (OrderItem orderItem : orderItems) {
 			if (orderItem.getOrderId() == id) {
-				int deletedOrderItem = orderItemDAO.delete(orderItem.getId());
+				int deletedOrderItem = orderItemDAO.delete(orderItem.getOrderId());
 			}
 		}
 		return orderDAO.delete(id);
@@ -103,9 +103,9 @@ public class OrderController implements CrudController<Order> {
 
 	public void addItem(Order order) {
 		List<Item> items = itemDAO.readAll();
-		LOGGER.info("Please enter an item to add. Enter 'Done' when you're finished");
+		LOGGER.info("Please enter an item to add. Enter 'Complete' when you're finished");
 		String newItem = utils.getString();
-		if (newItem.equalsIgnoreCase("DONE")) {
+		if (newItem.equalsIgnoreCase("COMPLETE")) {
 			return;
 		} else {
 			Long itemId = (long) -1;
@@ -117,7 +117,7 @@ public class OrderController implements CrudController<Order> {
 
 			if (itemId != -1) {
 				Item item = itemDAO.read(itemId);
-				// can probably remove variable assignment here, do it if everything works
+				
 				Order newOrder = orderDAO
 						.update(new Order(order.getId(), order.getCustomerId(), order.getTotal() + item.getPrice()));
 				OrderItem orderItem = orderItemDAO.create(new OrderItem(order.getId(), itemId));
@@ -154,23 +154,23 @@ public class OrderController implements CrudController<Order> {
 				Long orderItemId = (long) -1;
 				for (OrderItem oi : orderItems) {
 					if (oi.getOrderId() == order.getId() && oi.getItemId() == itemId) {
-						orderItemId = oi.getId();
+						orderItemId = oi.getOrderId();
 					}
 				}
 
 				if (orderItemId != -1) {
 					int deletedItem = orderItemDAO.delete(orderItemId);
-					LOGGER.info("Item removed from order");
+					LOGGER.info("Item removed from your order");
 					removeItem(order);
 					return;
 				} else {
-					LOGGER.info("Item not in order, please try again");
+					LOGGER.info("Item not in your order, please try again");
 					removeItem(order);
 					return;
 				}
 
 			} else {
-				LOGGER.info("No such item, please try again");
+				LOGGER.info("No item of that name, please try again");
 				removeItem(order);
 				return;
 			}
