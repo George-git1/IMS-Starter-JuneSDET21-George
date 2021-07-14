@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(70) NOT NULL,
   PRIMARY KEY (`id`));
 
 
