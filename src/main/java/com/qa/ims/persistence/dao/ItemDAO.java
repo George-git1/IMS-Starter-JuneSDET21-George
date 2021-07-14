@@ -19,7 +19,7 @@ package com.qa.ims.persistence.dao;
 		
 		public static final Logger LOGGER = LogManager.getLogger();
 
-		
+		//Throws exception
 		@Override
 		public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 			Long id = resultSet.getLong("item_id");

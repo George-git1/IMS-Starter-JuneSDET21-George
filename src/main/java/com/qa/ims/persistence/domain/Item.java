@@ -42,7 +42,7 @@ public class Item {
 		this.name = name;
 		this.price = price;
 	}
-
+// Prints out
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", price=" + price + "]";
