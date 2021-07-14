@@ -1,5 +1,7 @@
+package com.qa.ims.controller;
 
-<<<<<<< HEAD
+
+
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -62,5 +64,4 @@ public class ItemController implements CrudController<Item>{
 	}
 
 }
-=======
->>>>>>> d331373fae8ede8c729abb4954ca740e92a8ff6d
+

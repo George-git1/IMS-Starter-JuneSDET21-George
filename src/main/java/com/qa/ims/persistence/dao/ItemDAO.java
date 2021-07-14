@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
@@ -16,10 +16,9 @@ import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
 public class ItemDAO implements Dao<Item> {
-	
+
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("item_id");
@@ -27,9 +26,7 @@ public class ItemDAO implements Dao<Item> {
 		Double price = resultSet.getDouble("price");
 		return new Item(id, name, price);
 	}
-	
-	
-	
+
 	@Override
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -46,8 +43,7 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return new ArrayList<>();
 	}
-	
-	
+
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -60,8 +56,7 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -93,8 +88,7 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -111,7 +105,7 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -123,8 +117,6 @@ public class ItemDAO implements Dao<Item> {
 			LOGGER.error(e.getMessage());
 		}
 		return 0;
-	}
-=======
->>>>>>> d331373fae8ede8c729abb4954ca740e92a8ff6d
 
+	}
 }
