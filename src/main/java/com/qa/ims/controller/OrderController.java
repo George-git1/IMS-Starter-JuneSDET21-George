@@ -16,15 +16,19 @@ import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
-
+	
 	public static final Logger LOGGER = LogManager.getLogger();
-
+	
+	
 	private OrderDAO orderDAO;
 	private ItemDAO itemDAO;
 	private OrderItemDAO orderItemDAO;
 	private CustomerDAO customerDAO;
 	private Utils utils;
+	
+	
 
+	
 	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, OrderItemDAO orderItemDAO, CustomerDAO customerDAO,
 			Utils utils) {
 		super();
@@ -35,7 +39,7 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 	}
 
-	
+
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
@@ -44,69 +48,58 @@ public class OrderController implements CrudController<Order> {
 		}
 		return orders;
 	}
-
+	
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter your first name");
-		String firstName = utils.getString();
-		LOGGER.info("Please enter your surname");
-		String surname = utils.getString();
-		List<Customer> customers = customerDAO.readAll();
-		Long id = (long) -1;
-		for (Customer customer : customers) {
-			
-			if (customer.getFirstName().equalsIgnoreCase(firstName)
-					&& customer.getSurname().equalsIgnoreCase(surname)) {
-				id = customer.getId();
-			}
-		}
-		if (id != -1) {
-			Order order = orderDAO.create(new Order(id, (double) 0));
+		LOGGER.info("Please enter the customer Id");
+		Long customerId  = utils.getLong();
+		Order order = orderDAO.create(new Order(customerId));
+		LOGGER.info("Order created");
 		
-			LOGGER.info("Order started");
-			addItem(order);
-			return order;
-		} else {
-			LOGGER.info("No such customer");
-			Order order = new Order();
-			return order;
-		}
-
+		return order;
 	}
+		
 
+	
+	
 	@Override
 	public Order update() {
 		LOGGER.info("Please enter the id of the order");
 		Long orderId = utils.getLong();
-		
 		Order order = orderDAO.read(orderId);
-		LOGGER.info(
-				"First you will add any new items, then delete any old items. You do not have to both add and remove if you choose not to");
+		LOGGER.info("You may add any of the following items that are avialable");
 		addItem(order);
 		removeItem(order);
 		return order;
-
+		
 	}
-
+	
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the order you wish to delete");
+		LOGGER.info("Enter the id of the order you wish to delete");
 		Long id = utils.getLong();
 		List<OrderItem> orderItems = orderItemDAO.readAll();
 		for (OrderItem orderItem : orderItems) {
-			if (orderItem.getOrderId() == id) {
-				int deletedOrderItem = orderItemDAO.delete(orderItem.getOrderId());
+			if (orderItem.getOrderId()== id) {
+				orderItemDAO.delete(orderItem.getItemId());
 			}
 		}
 		return orderDAO.delete(id);
 	}
+	
 
-	public void addItem(Order order) {
+
+	
+	private Order addItem(Order order) {
 		List<Item> items = itemDAO.readAll();
-		LOGGER.info("Please enter an item to add. Enter 'Complete' when you're finished");
+		LOGGER.info("This is a list of items that can be added: ");
+		for (Item item : items) {
+			LOGGER.info(item.getName());
+		}
+		LOGGER.info("Enter an item from the list above and Type Finished when you're done adding items");
 		String newItem = utils.getString();
-		if (newItem.equalsIgnoreCase("COMPLETE")) {
-			return;
+		if (newItem.equalsIgnoreCase("Complete")) {
+			return order;
 		} else {
 			Long itemId = (long) -1;
 			for (Item it : items) {
@@ -114,30 +107,27 @@ public class OrderController implements CrudController<Order> {
 					itemId = it.getId();
 				}
 			}
-
+			
 			if (itemId != -1) {
 				Item item = itemDAO.read(itemId);
-				
-				Order newOrder = orderDAO
-						.update(new Order(order.getId(), order.getCustomerId(), order.getTotal() + item.getPrice()));
-				OrderItem orderItem = orderItemDAO.create(new OrderItem(order.getId(), itemId));
+				Order updatedOrder = orderDAO.update(new Order(order.getId(), (long) (order.getCustomerId()+item.getPrice())));
+				orderItemDAO.create(new OrderItem(updatedOrder.getId(),itemId));
 				LOGGER.info("Item added");
-				addItem(order);
-				return;
+				return addItem(updatedOrder);
 			} else {
 				LOGGER.info("No such item, please try again");
-				addItem(order);
-				return;
+				order = addItem(order);
+				return order;
 			}
 		}
 	}
-
-	public void removeItem(Order order) {
+	
+	private Order removeItem(Order order) {
 		List<Item> items = itemDAO.readAll();
-		LOGGER.info("Please enter an item to remove. Enter 'Done' when you're finished");
+		LOGGER.info("Enter an item from the list above and Type 'Finished' when you're done adding items");
 		String newItem = utils.getString();
-		if (newItem.toUpperCase().equalsIgnoreCase("DONE")) {
-			return;
+		if (newItem.toUpperCase().equalsIgnoreCase("Complete")) {
+			return order;
 		} else {
 			Long itemId = (long) -1;
 			for (Item it : items) {
@@ -145,36 +135,36 @@ public class OrderController implements CrudController<Order> {
 					itemId = it.getId();
 				}
 			}
-
+			
 			if (itemId != -1) {
 				Item item = itemDAO.read(itemId);
-				Order newOrder = orderDAO
-						.update(new Order(order.getId(), order.getCustomerId(), order.getTotal() - item.getPrice()));
+				Order updatedOrder = orderDAO.update(new Order(order.getId(),(long) (order.getCustomerId()-item.getPrice())));
+				LOGGER.info("HEY LOOK HERE!");
+				LOGGER.info(updatedOrder);
 				List<OrderItem> orderItems = orderItemDAO.readAll();
 				Long orderItemId = (long) -1;
-				for (OrderItem oi : orderItems) {
-					if (oi.getOrderId() == order.getId() && oi.getItemId() == itemId) {
-						orderItemId = oi.getOrderId();
+				for (OrderItem oi :orderItems) {
+					if (oi.getOrderId()==order.getId() && oi.getItemId()==itemId) {
+						orderItemId = oi.getItemId();
 					}
 				}
-
+				
 				if (orderItemId != -1) {
-					int deletedItem = orderItemDAO.delete(orderItemId);
-					LOGGER.info("Item removed from your order");
-					removeItem(order);
-					return;
+					orderItemDAO.delete(orderItemId);
+					
+					LOGGER.info("Item removed from order");
+					return removeItem(updatedOrder);
 				} else {
-					LOGGER.info("Item not in your order, please try again");
-					removeItem(order);
-					return;
+					LOGGER.info("Item not in order, please try again");
+					return removeItem(order);
 				}
-
+	
 			} else {
-				LOGGER.info("No item of that name, please try again");
-				removeItem(order);
-				return;
+				LOGGER.info("No such item, please try again");
+				return removeItem(order);
+				
 			}
-
+			
 		}
 	}
 }
