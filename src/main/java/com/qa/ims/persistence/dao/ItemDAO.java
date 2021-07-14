@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
@@ -123,5 +124,7 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return 0;
 	}
+=======
+>>>>>>> d331373fae8ede8c729abb4954ca740e92a8ff6d
 
 }

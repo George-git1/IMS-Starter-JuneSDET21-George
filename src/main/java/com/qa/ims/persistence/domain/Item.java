@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.qa.ims.persistence.domain;
 
 
@@ -75,3 +76,5 @@ public class Item {
 	
 
 }
+=======
+>>>>>>> d331373fae8ede8c729abb4954ca740e92a8ff6d
