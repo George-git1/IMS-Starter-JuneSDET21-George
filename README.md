@@ -1,5 +1,6 @@
-Coverage: 34%
-# Project Title
+Coverage: 76%
+# Inventory Management System - George Whyte
+This project allowed for a base to implement all of the knowledge that we have learnt over the last 3 weeks on Java, especially including the OOP principles which were a main factor that has developed my understanding a little bit bet on Java overall.
 
 One Paragraph of project description goes here
 
@@ -11,19 +12,23 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
-Give examples
-```
+The software that needed to be installed were mySQL, Java and Eclipse. These were the main softwares and applications that needed to be installed in order to complete the project. There are additional feautures that were needed when installing java, such as dependencies for the pom needed to be imported from maven in order to test and create a maven project.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+This installation requires the use of Eclipse (Java IDE) or similar.
 
-Say what the step will be
+A link of this Github repo is required in order to start
 
-```
-Give the example
-```
+Once the link is copied, find the import option in Eclipse and select Projects with git, the one that has the smart install feature
+
+Import the link from the Github account you have copied and it and pressed Next a few times, it shall be in your project explorer
+
+MySQl will then need to be used to create a database. This should be done in the Schema file which is located under both main and test resources.
+
+In order to finish, a connection needs to be established to the databased in which the same location the Schema is there is a db.properties file in which you input the link, user name, and password.
+
+Once these steps listed above have been complete, the software should be able to be ran from the runner class.
 
 And repeat
 
@@ -39,30 +44,24 @@ Explain how to run the automated tests for this system. Break down into which te
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+There are varius groups that were involved in testing, which were DAO's, Controllers and Domain.
+
+This test connects to the database and reads all the items that are in the items table in the SQL database, while if one item is out of position or the ID is wrong it will not gather the information. Furthermore, this test can be run through the src/test/java and run using JUnit through the implementation of dependencays to run these tests.
 
 ```
-Give an example
-```
+@Test
+	public void testReadAll() {
+		List<Item> expected = new ArrayList<>();
+		expected.add(new Item(1L, "Ernie ball Strings", 5.40));
+		expected.add(new Item(2L, "Adapter", 3.50));
+		expected.add(new Item(3L, "Sausage", 4.00));
+		expected.add(new Item(4L, "EMG humbuckers", 145.23));
+		assertEquals(expected, DAO.readAll());
+	}
 
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
@@ -70,11 +69,12 @@ Add additional notes about how to deploy this on a live system
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+We use Github(http://github.org/) for versioning
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **George Whyte** - *Project work* 
 
 ## License
 
@@ -84,6 +84,6 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+I would like to give a massive shout out to Pawel and Alan for helping me with issues that I could not understand, and continually Pawel as his efforts to help are incredible.
+Additionally, I would like to thank the team I was working in as we all shared help which made us all more comfortable.
+Finally, I would like to thank David for listening to me moan about why I have errors.
