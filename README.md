@@ -85,5 +85,5 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 I would like to give a massive shout out to Pawel and Alan for helping me with issues that I could not understand, and continually Pawel as his efforts to help are incredible.
-Additionally, I would like to thank the team I was working in as we all shared help which made us all more comfortable.
-Finally, I would like to thank David for listening to me moan about why I have errors.
+Additionally, I would like to thank the team I was working in as we all shared help which made us all much more comfortable with the project.
+Finally, I would like to thank David for being able to work through problems together and find solutions to errors.
