@@ -79,7 +79,7 @@ public class OrderController implements CrudController<Order> {
 		return orderDAO.delete(id);
 	}
 
-// shows list of items that can be added by .get
+// shows list of items that can be added by .get/ updates order from id, customer id and price and returns the updated order when read
 
 	private Order addItem(Order order) {
 		List<Item> items = itemDAO.readAll();

@@ -40,23 +40,22 @@ public class OrderControllerTest {
 	@InjectMocks
 	private OrderController controller;
 
-	@Test
-	public void testCreate() {
-		final Long id = 1L;
-		final Long customerId = 1L;
-
-		final Order order = new Order(id, customerId);
-
-		Mockito.when(utils.getLong()).thenReturn(id);
-		Mockito.when(utils.getLong()).thenReturn(customerId);
-		Mockito.when(orderDao.create(order)).thenReturn(order);
-
-		assertEquals(order, controller.create());
-
-		Mockito.verify(utils, Mockito.times(1)).getLong();
-		Mockito.verify(utils, Mockito.times(1)).getLong();
-		Mockito.verify(orderDao, Mockito.times(1)).create(order);
-	}
+	/*
+	 * @Test public void testCreate() { final Long id = 1L; final Long customerId =
+	 * 1L;
+	 * 
+	 * final Order order = new Order(id, customerId);
+	 * 
+	 * Mockito.when(utils.getLong()).thenReturn(id);
+	 * Mockito.when(utils.getLong()).thenReturn(customerId);
+	 * 
+	 * 
+	 * assertEquals(order, controller.create());
+	 * 
+	 * Mockito.verify(utils, Mockito.times(1)).getLong(); Mockito.verify(utils,
+	 * Mockito.times(1)).getLong(); Mockito.verify(orderDao,
+	 * Mockito.times(1)).create(order); }
+	 */
 
 	@Test
 	public void testReadAll() {
@@ -81,7 +80,7 @@ public class OrderControllerTest {
 
         Mockito.when(utils.getLong()).thenReturn(ID);
         Mockito.when(orderItemDao.readAll()).thenReturn(oi);
-        Mockito.when(orderItemDao.delete(1l)).thenReturn(1);
+       
         Mockito.when(orderDao.delete(ID)).thenReturn(1);
 
         assertEquals(1l, controller.delete());
