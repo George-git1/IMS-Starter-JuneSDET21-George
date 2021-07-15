@@ -23,6 +23,7 @@ public class ItemController implements CrudController<Item>{
 		this.utils = utils;
 	}
 	
+	// reads the items
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemDAO.readAll();
@@ -31,6 +32,8 @@ public class ItemController implements CrudController<Item>{
 		}
 		return items;
 	}
+	
+	// creates items
 	
 	@Override
 	public Item create() {
@@ -43,6 +46,7 @@ public class ItemController implements CrudController<Item>{
 		return item;
 	}
 	
+	// updates the item by id
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the item you would like to update");
@@ -56,6 +60,7 @@ public class ItemController implements CrudController<Item>{
 		return item;
 	}
 	
+	// deletes item by id
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
