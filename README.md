@@ -1,6 +1,6 @@
 Coverage: 75.5%
 # Inventory Management System - George Whyte
-This project allowed for a base to implement all of the knowledge that we have learnt over the last 3 weeks on Java, especially including the OOP principles which were a main factor that has developed my understanding a little bit bet on Java overall.
+This project allowed for a base to implement all of the knowledge that we have learnt over the last 3 weeks on Java, especially including the OOP principles which were a main factor that has developed my understanding on Java better.
 
 One Paragraph of project description goes here
 
